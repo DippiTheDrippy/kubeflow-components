@@ -117,7 +117,7 @@ export function mapSimpleBindingToWorkgroupBinding(
 const surfaceProfileControllerErrors = (info: {
   res: Response;
   msg: string;
-  err: any;
+  err: { response?: { statusCode?: number }; body?: string; stack?: string };
 }) => {
   const { res, msg, err } = info;
   const code = (err.response && err.response.statusCode) || 400;
