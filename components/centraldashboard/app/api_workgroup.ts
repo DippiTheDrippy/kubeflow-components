@@ -114,11 +114,7 @@ export function mapSimpleBindingToWorkgroupBinding(
  * response sent back to client
  */
 // tslint:disable-next-line: no-any
-const surfaceProfileControllerErrors = (info: {
-  res: Response;
-  msg: string;
-  err: { response?: { statusCode?: number }; body?: string; stack?: string };
-}) => {
+const surfaceProfileControllerErrors = (info: {res: Response; msg: string; err: any;}) => {
   const { res, msg, err } = info;
   const code = (err.response && err.response.statusCode) || 400;
   const devError = err.body || "";

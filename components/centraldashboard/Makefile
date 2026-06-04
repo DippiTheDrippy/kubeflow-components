@@ -1,5 +1,6 @@
-IMG ?= ghcr.io/kubeflow/kubeflow/central-dashboard
-TAG ?= $(shell git describe --tags --always --dirty)
+IMG ?= kubeflow/central-dashboard
+TAG ?= v1.10.0-prefixed-namespaces 
+#$(shell git describe --tags --always --dirty)
 COMMIT = $(shell git rev-parse HEAD)
 DOCKERFILE ?= Dockerfile
 ARCH ?= linux/amd64
@@ -32,7 +33,7 @@ docker-push:
 
 .PHONY: docker-build-multi-arch
 docker-build-multi-arch: ##  Build multi-arch docker images with docker buildx
-	docker buildx build --load --platform ${ARCH} --tag ${IMG}:${TAG} -f ${DOCKERFILE} . --build-arg kubeflowversion=$(shell git describe --abbrev=0 --tags) --build-arg commit=$(COMMIT) --label=git-version=$(TAG)
+	docker buildx build ${DOCKER_BUILD_OPTS} --load --platform ${ARCH} --tag ${IMG}:${TAG} -f ${DOCKERFILE} . --build-arg kubeflowversion=$(shell git describe --abbrev=0 --tags) --build-arg commit=$(COMMIT) --label=git-version=$(TAG)
 
 
 .PHONY: docker-build-push-multi-arch
